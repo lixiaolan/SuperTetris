@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <map>
 #include <memory>
 #include <stdlib.h>
@@ -568,15 +569,24 @@ public:
 
 class TetrisFiller {
 public:
-  TetrisFiller(vector<vector<share_ptr<BlockBase > > > grid) {this.grid = grid; };
+  TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid) {this->grid = grid; };
 
+  bool fill(int i, int j) {
+    if ((i > 0) && (i < (*grid).size()) && (j > 0) && (j < (*grid)[0].size())) {
+      return selectFittingPiece(i, j);
+    }
+    else {
+      return false;
+    }
+  }
+  
 private:
-  vector<vector<share_ptr<BlockBase > > > grid;
+  vector<vector<shared_ptr<BlockBase > > > * grid;
   stack<shared_ptr<PieceBase> > pieces;
 
   bool selectFittingPiece(int i, int j)
   {
-    if (!(grid[i][j]->isBlank() )) { return false; }
+    if (!((*grid)[i][j]->isBlank() )) { return false; }
 
     // Try all pieces
     for (unsigned index = 0; index < 76; index++) {
@@ -630,15 +640,16 @@ private:
     pieces.push(piece);
     // Add to grid
     for (auto block : piece->getBlocks()) {
-      grid[block->i][block->j] = block;
+      (*grid)[block->i][block->j] = block;
     }
   }
 
-  void removeUpToAndIncludingPiece(shared_ptr<PieceBase> piece) {
+  void removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
     while(pieces.size() > 0) {
-      share_ptr<PieceBase> top = pieces.pop();
+      shared_ptr<PieceBase> top = pieces.top();
+      pieces.pop();
       for (auto block : top->getBlocks()) {
-        grid[block->i][block->j] = make_shared<BlankBlock>(BlankBlock(block->i, block->j));
+        (*grid)[block->i][block->j] = make_shared<BlankBlock>(BlankBlock(block->i, block->j));
       }
       if (top == piece) break;
     }
@@ -661,34 +672,48 @@ private:
 
     i--;
     if (i > 0) {
-      if (grid[i][j]->isBlank())
+      if ((*grid)[i][j]->isBlank())
         return true;
     }
   
     i++;
     j--;
     if (j > 0) {
-      if (grid[i][j]->isBlank())
+      if ((*grid)[i][j]->isBlank())
         return true;
     }
 
     i++;
     j++;
-    if (i < grid.size()) {
-      if (grid[i][j]->isBlank())
+    if (i < (*grid).size()) {
+      if ((*grid)[i][j]->isBlank())
         return true;
     }
 
     i--;
     j++;
-    if (j < grid[0].size()) {
-      if (grid[i][j]->isBlank())
+    if (j < (*grid)[0].size()) {
+      if ((*grid)[i][j]->isBlank())
         return true;
     }
 
     return false;
   }
-}
+
+  bool pieceFits(shared_ptr<PieceBase> piece) {
+    for (auto block : piece->getBlocks()) {
+      // Verify that each block is inside the grid
+      if (block->i < 0) return false;
+      if (block->j < 0) return false;
+      if (block->i >= (*grid).size()) return false;
+      if (block->j >= (*grid)[0].size()) return false;
+
+      // Verify that each block is blank
+      if (!((*grid)[block->i][block->j]->isBlank())) return false;
+    }
+    return true;
+  }
+};
 
 
 class Board {
@@ -743,8 +768,8 @@ private:
 
   bool getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &, int &);
   bool getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &, int &);
-  bool selectFittingPiece(int i, int j, int depth);
-  bool surroundPiece(shared_ptr<PieceBase> piece, int depth);
+  bool selectFittingPiece(int i, int j);
+  bool surroundPiece(shared_ptr<PieceBase> piece);
   bool pieceFits(shared_ptr<PieceBase>);
   bool markPiece(shared_ptr<PieceBase> piece);
   bool unmarkPiece(shared_ptr<PieceBase> piece);
@@ -844,8 +869,7 @@ bool Board::dropPiece(shared_ptr<PieceBase> piece, pair<int, int> loc) {
       loc.first = loc.first + 1;
     }
     loc.first = loc.first - 1;
-    vector<shared_ptr<Block> > blocks = piece->getBlocks();
-    for (auto b : blocks) {
+    for (auto b : piece->getBlocks()) {
       grid[loc.first + b->i][loc.second + b->j] = b;
     }
     fillEmpty();
@@ -873,16 +897,11 @@ void Board::fillEmpty() {
             recFill(i,j);
           }
           else if ((c % 4) == 0 && c <= 12 ) {
-            cout << "selectFittingPiece" << endl;
-            recResetMark(i,j);
-            if (selectFittingPiece(i,j,3)) {
-              cout << "recFill 2" << endl;
-              recFill(i,j);
-            }
-            else {
-              cout << "recResetMark" << endl;
-              c = recCount(i,j);
-            }
+            TetrisFiller tetrisFiller = TetrisFiller(&grid);
+            bool testBool = tetrisFiller.fill(i, j);
+            if (!testBool) {
+              recCount(i,j);
+            }            
           }
 	}
       }     
