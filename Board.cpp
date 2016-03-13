@@ -100,190 +100,190 @@ public:
 class Ell0 : public PieceBase {
 public:
   Ell0() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(2, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(2, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'A') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(2, 1, 'A') ) );
   }
 };
 
 class Ell1 : public PieceBase {
 public:
   Ell1() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); //     0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 2, '0') ) ); // 
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); //     0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'A') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 2, 'A') ) ); // 
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'A') ) );
   }
 };
 
 class Ell2 : public PieceBase {
 public:
   Ell2() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(2, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'A') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'A') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(2, 1, 'A') ) );
   }
 };
 
 class Ell3 : public PieceBase {
 public:
   Ell3() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); 
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'A') ) ); 
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'A') ) );
   }
 };
 
 class EllRev0 : public PieceBase {
 public:
   EllRev0() {
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(2, 1, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(2, 0, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'B') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(2, 1, 'B') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'B') ) );
   }
 };
 
 class EllRev1 : public PieceBase {
 public:
   EllRev1() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //     0
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) ); 
-    blocks.push_back(make_shared<Block>(Block(1, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); //     0
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'B') ) ); 
+    blocks.push_back(make_shared<Block>(Block(1, 2, 'B') ) );
   }
 };
 
 class EllRev2 : public PieceBase {
 public:
   EllRev2() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'B') ) );
   }
 };
 
 class EllRev3 : public PieceBase {
 public:
   EllRev3() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); 
-    blocks.push_back(make_shared<Block>(Block(1, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'B') ) ); 
+    blocks.push_back(make_shared<Block>(Block(1, 2, 'B') ) );
   }
 };
 
 class Tee0 : public PieceBase {
 public:
   Tee0() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0  
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) ); 
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'C') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); //   0  
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'C') ) ); 
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'C') ) );
   }
 };
 
 class Tee1 : public PieceBase {
 public:
   Tee1() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(2, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'C') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'C') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'C') ) );
   }
 };
 
 class Tee2 : public PieceBase {
 public:
   Tee2() {
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) );
-    blocks.push_back(make_shared<Block>(Block(1, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); // 0 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'C') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 2, 'C') ) );
   }
 };
 
 class Tee3 : public PieceBase {
 public:
   Tee3() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(2, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'C') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(2, 1, 'C') ) );
   }
 };
 
 class Zee0 : public PieceBase {
 public:
   Zee0() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); 
-    blocks.push_back(make_shared<Block>(Block(1, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'D') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'D') ) ); //   0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'D') ) ); 
+    blocks.push_back(make_shared<Block>(Block(1, 2, 'D') ) );
   }
 };
 
 class Zee1 : public PieceBase {
 public:
   Zee1() {
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(2, 0, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'D') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'D') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'D') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'D') ) );
   }
 };
 
 class ZeeRev0 : public PieceBase {
 public:
   ZeeRev0() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); //   0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); //
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'E') ) ); //   0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'E') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'E') ) ); //
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'E') ) );
   }
 };
 
 class ZeeRev1 : public PieceBase {
 public:
   ZeeRev1() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); //   0
-    blocks.push_back(make_shared<Block>(Block(2, 1, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'E') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'E') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'E') ) ); //   0
+    blocks.push_back(make_shared<Block>(Block(2, 1, 'E') ) );
   }
 };
 
 class Dash0 : public PieceBase {
 public:
   Dash0() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); // 
-    blocks.push_back(make_shared<Block>(Block(0, 2, '0') ) ); // 
-    blocks.push_back(make_shared<Block>(Block(0, 3, '0') ) );
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'F') ) ); // 0 0 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'F') ) ); // 
+    blocks.push_back(make_shared<Block>(Block(0, 2, 'F') ) ); // 
+    blocks.push_back(make_shared<Block>(Block(0, 3, 'F') ) );
   }
 };
 
 class Dash1 : public PieceBase {
 public:
   Dash1() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(2, 0, '0') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(3, 0, '0') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'F') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'F') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'F') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(3, 0, 'F') ) ); // 0
   }
 };
 
 class Box : public PieceBase {
 public:
   Box() {
-    blocks.push_back(make_shared<Block>(Block(0, 0, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, '0') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(1, 0, '0') ) ); // 
-    blocks.push_back(make_shared<Block>(Block(1, 1, '0') ) ); // 
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'G') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'G') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'G') ) ); // 
+    blocks.push_back(make_shared<Block>(Block(1, 1, 'G') ) ); // 
   }
 };
 
@@ -766,13 +766,6 @@ private:
   int height, width;
   vector<vector <shared_ptr<BlockBase> > > grid;
 
-  bool getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &, int &);
-  bool getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &, int &);
-  bool selectFittingPiece(int i, int j);
-  bool surroundPiece(shared_ptr<PieceBase> piece);
-  bool pieceFits(shared_ptr<PieceBase>);
-  bool markPiece(shared_ptr<PieceBase> piece);
-  bool unmarkPiece(shared_ptr<PieceBase> piece);
   void fillEmpty();
   int recCount(int, int);
   void recFill(int, int);
@@ -890,13 +883,8 @@ void Board::fillEmpty() {
 	  // if recursive count returns 4, do a recursive fill with
 	  // "fire" blocks
 
-          cout << "recCount" << endl;
 	  int c = recCount(i,j);
-	  if (c == 4) {
-            cout << "recFill" << endl;
-            recFill(i,j);
-          }
-          else if ((c % 4) == 0 && c <= 12 ) {
+          if ((c % 4) == 0 && c <= 12 ) {
             TetrisFiller tetrisFiller = TetrisFiller(&grid);
             bool testBool = tetrisFiller.fill(i, j);
             if (!testBool) {
@@ -917,137 +905,6 @@ void Board::fillEmpty() {
   return;
 }
 
-bool Board::pieceFits(shared_ptr<PieceBase> piece) {
-  for (auto blockPtr : piece->getBlocks()) {
-    // Verify that each block is inside the grid
-    if (blockPtr->i < 0) return false;
-    if (blockPtr->j < 0) return false;
-    if (blockPtr->i >= grid.size()) return false;
-    if (blockPtr->j >= grid[0].size()) return false;
-
-    // Verify that each block is blank and un-marked
-    if (!(grid[blockPtr->i][blockPtr->j]->isBlank())) return false;
-    if ((grid[blockPtr->i][blockPtr->j]->mark)) return false;
-  }
-  return true;
-}
-
-bool Board::selectFittingPiece(int i, int j)
-{
-  if (!(grid[i][j]->isBlank() )) { return false; }
-  if (grid[i][j]->mark) {return false; }
-  shared_ptr<PieceBase> piece = nullptr;
-
-  // Try all pieces
-  for (unsigned index = 0; index < 76; index++) {
-    piece = getAnchoredPiece(index);
-    translatePiece(piece, i, j);
-
-    // Check if piece actually fits
-    if (pieceFits(piece)) {
-      // cout << "found fitting piece: #" << index << " at (" << i << " ," << j << ")";
-      
-      // Make the new piece
-      markPiece(piece);
-      if (surroundPiece(piece)) {
-
-        // If we surrounded the succesfully, return true
-        return true;
-      }
-
-      // If the piece could not be surrounded, unmakr and try a new
-      // one
-      unmarkPiece(piece);
-    }
-  }
-
-  // If acceptable piece fit, return false
-  return false;
-}
-
-// Marks piece in grid. Assumes piece fits in grid.
-bool Board::markPiece(shared_ptr<PieceBase> piece) {
-  for (auto block : piece->getBlocks()) {
-    grid[block->i][block->j]->mark = true;
-  }
-}
-
-// UnMarks piece in grid. Assumes piece fits in grid.
-bool Board::unmarkPiece(shared_ptr<PieceBase> piece) {
-  for (auto block : piece->getBlocks()) {
-    grid[block->i][block->j]->mark = false;
-  }
-}
-
-
-// Place pieces around the input piece
-bool Board::surroundPiece(shared_ptr<PieceBase> piece) {
-  int i;
-  int j;
-  
-  // Keep iterating until all surrounding squares are filled
-  while(1) {
-    if (getEmptyPieceSurrounding(piece, i, j)) {
-      // cout << "got empty piece surrounding block at (" << i << " ," << j << ")";
-      if (!selectFittingPiece(i, j)) return false;
-    }
-    else {
-      break;
-    }
-  }
-
-  // If we get here, all surrounding pieces have been filed
-  return true;
-}
-
-// Method searches for unmarked squares surrounding a piece. The
-// method assumes that the piece itself has already been marked. 
-bool Board::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i, int &j) {
-  for (auto blockPtr : piece->getBlocks()) {
-    if (getEmptyBlockSurrounding(blockPtr, i, j)) return true;
-  }
-  return false;
-}
-
-// Finds an blank unmarked bock surrounding the input block. Assumes
-// the block is located inside of the grid.
-bool Board::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j) {
-  i = blockPtr->i;
-  j = blockPtr->j;
-
-  i--;
-  if (i > 0) {
-    if (grid[i][j]->isBlank() &&
-        !grid[i][j]->mark)
-      return true;
-  }
-  
-  i++;
-  j--;
-  if (j > 0) {
-    if (grid[i][j]->isBlank() &&
-        !grid[i][j]->mark)
-      return true;
-  }
-
-  i++;
-  j++;
-  if (i < grid.size()) {
-    if (grid[i][j]->isBlank() &&
-        !grid[i][j]->mark)
-      return true;
-  }
-
-  i--;
-  j++;
-  if (j < grid[0].size()) {
-    if (grid[i][j]->isBlank() &&
-        !grid[i][j]->mark)
-      return true;
-  }
-
-  return false;
-}
 
 int Board::recCount(int i, int j) {
   if (!(grid[i][j]->isBlank() )) { return false; }
