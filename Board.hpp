@@ -26,7 +26,8 @@ public:
   void draw();
   bool pieceFits(shared_ptr<PieceBase> piece, pair<int, int> loc);
   ~Board() = default;
-
+  unsigned linesKilled = 0;
+  
 private:
   int height, width;
   vector<vector <shared_ptr<BlockBase> > > grid;

@@ -28,7 +28,6 @@ Board::Board(int h, int w) : height(h), width(w) {
   grid.push_back(botrow);
 }
 
-
 void Board::draw() {
   for (int i = 0; i < grid.size(); i++) {
     for (int j = 0; j < grid[0].size(); j++) {
@@ -40,6 +39,7 @@ void Board::draw() {
 }
 
 void Board::killLines() {
+  int count = 0;
   int slow = grid.size()-2;
   int fast = grid.size()-2;
   bool killLine[grid.size()]; 
@@ -49,7 +49,7 @@ void Board::killLines() {
     has = false;
     for (int j = 0; j < grid[0].size(); j++) {
       if ((i==0)||(i==grid.size()-1)) has = true;
-	has = (has||grid[i][j]->isBlank());
+      has = (has||grid[i][j]->isBlank());
     }
     killLine[i] = !has;
   }
@@ -82,6 +82,7 @@ void Board::killLines() {
   while (fast > 0) {
     if (killLine[fast]) {
       fast--;
+      linesKilled++;
     } 
     // else write fast to slow and increment both
     else {
@@ -103,6 +104,7 @@ void Board::killLines() {
     grid[slow] = midrow;
     slow--;
   }
+  
   // After the loop write everything from slow up to 1 with blank rows;
 }
 

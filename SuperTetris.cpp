@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <stack>
 #include <map>
@@ -85,9 +86,14 @@ public:
       board.draw();
       drawPieces();
       move(0,0);
+      stringstream oss;
+      oss << "Lines: " << board.linesKilled;
+      addstr(oss.str().c_str());
+      curs_set(0);
       if (!board.pieceFits(pieces.front(), loc)) break;
     } while ((ch = getch()) != KEY_F(1)); 
     endwin();			/* End curses mode */
+    cout << "Lines: " << board.linesKilled << endl;
     return;
   }
 };
