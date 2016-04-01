@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <set>
 #include <map>
 #include <memory>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
 #include <algorithm>
 #include "BlocksAndPieces.hpp"
 #include "Utility.hpp"
+#include <fstream>
 
 using namespace std;
 
@@ -24,6 +26,8 @@ public:
 private:
   vector<vector<shared_ptr<BlockBase > > > * grid;
   stack<shared_ptr<PieceBase> > pieces;
+  set<shared_ptr<BlockBase> > blocks;
+  int recCount(int i, int j);
   bool selectFittingPiece(int i, int j);
   bool surroundPiece(shared_ptr<PieceBase> piece);
   void addPiece(shared_ptr<PieceBase> piece);
@@ -35,6 +39,7 @@ private:
   // the block is located inside of the grid.
   bool getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j);
   bool pieceFits(shared_ptr<PieceBase> piece);
+  void printGrid();
 };
 
 #endif

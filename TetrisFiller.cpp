@@ -22,10 +22,12 @@ bool TetrisFiller::selectFittingPiece(int i, int j)
 
     // Check if piece actually fits
     if (pieceFits(piece)) {
-      // cout << "found fitting piece: #" << index << " at (" << i << " ," << j << ")";
       
       // Make the new piece
       addPiece(piece);
+
+      // print for debugging
+      // printGrid();
 
       // Try to surround piece
       if (surroundPiece(piece)) {
@@ -51,6 +53,18 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   while(1) {
     if (getEmptyPieceSurrounding(piece, i, j)) {
       // cout << "got empty piece surrounding block at (" << i << " ," << j << ")";
+
+      blocks.clear();
+      int count = recCount(i, j);
+
+      // ofstream ofs;
+      // ofs.open("temp.txt", std::ios_base::app);
+
+      // ofs << "count: " << count << endl;
+      // ofs.close();
+      
+      if (count % 4 != 0) return false;
+      
       if (!selectFittingPiece(i, j)) return false;
     }
     else {
@@ -60,6 +74,31 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
 
   // If we get here, all surrounding pieces have been filed
   return true;
+}
+
+int TetrisFiller::recCount(int i, int j) {
+  if (!((*grid)[i][j]->isBlank() )) return 0;
+  if (blocks.find((*grid)[i][j]) != blocks.end()) return 0;
+  blocks.insert((*grid)[i][j]);
+  
+  int u;
+  int d;
+  int l;
+  int r;
+  if (i-1 >= 0) {
+    u = recCount(i-1, j);
+  }
+  if (i+1 < (*grid).size()) {
+    d = recCount(i+1, j);
+  }
+  if (j-1 >= 0) {
+    l = recCount(i, j-1);
+  }
+  if (j+1 < (*grid)[0].size()) {
+    r = recCount(i, j+1);
+  }
+  
+  return 1+u+d+l+r;
 }
 
 void TetrisFiller::addPiece(shared_ptr<PieceBase> piece) {
@@ -82,8 +121,8 @@ void TetrisFiller::removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
   }
 }
 
-// Method searches for unmarked squares surrounding a piece. The
-// method assumes that the piece itself has already been marked. 
+// Method searches for blank squares surrounding a piece. The method
+// assumes that the piece itself has already been marked.
 bool TetrisFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i, int &j) {
   for (auto blockPtr : piece->getBlocks()) {
     if (getEmptyBlockSurrounding(blockPtr, i, j)) return true;
@@ -91,8 +130,8 @@ bool TetrisFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i,
   return false;
 }
 
-// Finds an blank unmarked bock surrounding the input block. Assumes
-// the block is located inside of the grid.
+// Finds a blank bock surrounding the input block. Assumes the block
+// is located inside of the grid.
 bool TetrisFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j) {
   i = blockPtr->i;
   j = blockPtr->j;
@@ -139,4 +178,15 @@ bool TetrisFiller::pieceFits(shared_ptr<PieceBase> piece) {
     if (!((*grid)[block->i][block->j]->isBlank())) return false;
   }
   return true;
+}
+
+void TetrisFiller::printGrid() {
+  ofstream ofs;
+  ofs.open("temp.txt", std::ios_base::app);
+  for (int i = 0; i < (*grid).size(); i++) {
+    for (int j = 0; j < (*grid)[0].size(); j++) {
+      ofs << (*grid)[i][j]->draw() << " ";
+    }
+    ofs << endl;
+  }
 }

@@ -54,30 +54,6 @@ void Board::killLines() {
     killLine[i] = !has;
   }
 
-  //COMMENT OUT THE FIRE SWEEPS TO GET REGULAR TETRIS.
-  
-  // // Fire sweep up
-  // for (int i = 1; i < grid.size(); i++) {
-  //   has = false;
-  //   for (int j = 0; j < grid[0].size(); j++) {
-  //     has = (has||grid[i][j]->isFire());
-  //   }
-  //   if ((has)&&(killLine[i-1])) {
-  //     killLine[i] = true;
-  //   }
-  // }
-
-  // // Fire sweep down
-  // for (int i = grid.size()-2; i >= 0; i--) {
-  //   has = false;
-  //   for (int j = 0; j < grid[0].size(); j++) {
-  //     has = (has||grid[i][j]->isFire());
-  //   }
-  //   if ((has)&&(killLine[i+1])) {
-  //     killLine[i] = true;
-  //   }
-  // }
-
   // Now kill all the lines
   while (fast > 0) {
     if (killLine[fast]) {
@@ -152,7 +128,7 @@ void Board::fillEmpty() {
 	  // "fire" blocks
 
 	  int c = recCount(i,j);
-          if ((c % 4) == 0 && c <= 12 ) {
+          if ((c % 4) == 0) {
             TetrisFiller tetrisFiller = TetrisFiller(&grid);
             bool testBool = tetrisFiller.fill(i, j);
             if (!testBool) {
@@ -173,9 +149,15 @@ void Board::fillEmpty() {
   return;
 }
 
+
+// Method to count the number of blank unmarked blocks in a region. If
+// the region contains the top edge, the count is infinite. This is
+// reported here by returing -1. In this case, however, the method
+// still marks all the squares in the region.
 int Board::recCount(int i, int j) {
-  if (!(grid[i][j]->isBlank() )) { return false; }
-  if (grid[i][j]->mark) {return false; }
+  if (i == 0) return -1;
+  if (!(grid[i][j]->isBlank() )) return 0;
+  if (grid[i][j]->mark) return 0;
   grid[i][j]->mark = true;
 
   int u;
@@ -195,6 +177,8 @@ int Board::recCount(int i, int j) {
     r = recCount(i, j+1);
   }
 
+  if ((u == -1) || (d == -1) || (l == -1) || (r == -1)) return -1;
+  
   return 1+u+d+l+r;
 }
 
