@@ -3,6 +3,10 @@
 TetrisFiller::TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid) {this->grid = grid; };
 
 bool TetrisFiller::fill(int i, int j) {
+
+  // Seed the random number generator
+  srand(time(0));
+  
   if ((i > 0) && (i < (*grid).size()) && (j > 0) && (j < (*grid)[0].size())) {
     return selectFittingPiece(i, j);
   }
@@ -15,9 +19,16 @@ bool TetrisFiller::selectFittingPiece(int i, int j)
 {
   if (!((*grid)[i][j]->isBlank() )) { return false; }
 
+  vector<unsigned> randomArray;
+  for (unsigned index = 0; index < 76; index++)
+    randomArray.push_back(index);
+
+  random_shuffle(randomArray.begin(), randomArray.end());
+  
   // Try all pieces
   for (unsigned index = 0; index < 76; index++) {
-    shared_ptr<PieceBase> piece = getAnchoredPiece(index);
+    
+    shared_ptr<PieceBase> piece = getAnchoredPiece(randomArray[index]);
     translatePiece(piece, i, j);
 
     // Check if piece actually fits

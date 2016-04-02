@@ -16,6 +16,7 @@
 #include "BlocksAndPieces.hpp"
 #include "Utility.hpp"
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
