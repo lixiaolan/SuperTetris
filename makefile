@@ -4,7 +4,7 @@ CC=g++ -std=c++11
 CFLAGS = -g -Wall
 
 #Define the rules in the dependancy tree:
-progs :  superTetris
+progs : superTetris tetrisFill
 
 Utility.o : Utility.cpp Utility.hpp BlocksAndPieces.hpp
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -17,6 +17,9 @@ Board.o : Board.cpp Board.hpp TetrisFiller.o
 
 superTetris : SuperTetris.cpp Board.o Utility.o
 	$(CC) -o $@ SuperTetris.cpp Board.o Utility.o TetrisFiller.o -lncurses $(CFLAGS)
+
+tetrisFill : TetrisFill.cpp Utility.o TetrisFiller.o
+	$(CC) -o $@ TetrisFill.cpp Utility.o TetrisFiller.o $(CFLAGS)
 
 .PHONY: clean
 

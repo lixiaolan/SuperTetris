@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<tetrisFill>
+  <problem>
+    <grid row="10" col="10">0 1 0 0 1 1 1 1 0</grid>
+    <start row="3" col="5"></start>
+    <seed>4</seed>
+  </problem>
+  <solution>
+    <piece type="2" row="3" col="4"></piece>
+    <piece type="4" row="5" col="5"></piece>
+    <piece type="8" row="2" col="3"></piece>
+  </solution>
+</tetrisFill>

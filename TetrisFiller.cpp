@@ -14,7 +14,11 @@ bool TetrisFiller::fill(int i, int j) {
     return false;
   }
 }
-  
+
+stack<shared_ptr<PieceBase> > TetrisFiller::getSolutionStack() {
+  return pieces;
+}
+
 bool TetrisFiller::selectFittingPiece(int i, int j)
 {
   if (!((*grid)[i][j]->isBlank() )) { return false; }

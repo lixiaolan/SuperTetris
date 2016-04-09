@@ -23,7 +23,8 @@ using namespace std;
 class TetrisFiller {
 public:
   TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid);
-  bool fill(int i, int j);  
+  bool fill(int i, int j);
+  stack<shared_ptr<PieceBase> > getSolutionStack();
 private:
   vector<vector<shared_ptr<BlockBase > > > * grid;
   stack<shared_ptr<PieceBase> > pieces;

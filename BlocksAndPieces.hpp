@@ -75,6 +75,9 @@ protected:
   // positions of upper left corner
 public:
   PieceBase() = default;
+  int i;
+  int j;
+  int Id() { return -1 };
   bool fitsIn(vector<vector< bool> > matrix) {
     // Expects array where true is open and false is filled    
     for (auto pb : blocks) {
@@ -102,6 +105,7 @@ public:
 
 class Ell0 : public PieceBase {
 public:
+  int Id() { return 0; }
   Ell0() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); // 0
@@ -112,6 +116,7 @@ public:
 
 class Ell1 : public PieceBase {
 public:
+  int Id() { return 1; }
   Ell1() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); //     0
     blocks.push_back(make_shared<Block>(Block(1, 1, 'A') ) ); // 0 0 0
@@ -122,6 +127,7 @@ public:
 
 class Ell2 : public PieceBase {
 public:
+  int Id() { return 2; }
   Ell2() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'A') ) ); //   0
@@ -132,6 +138,7 @@ public:
 
 class Ell3 : public PieceBase {
 public:
+  int Id() { return 3; }
   Ell3() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'A') ) ); // 0 0 0
     blocks.push_back(make_shared<Block>(Block(0, 0, 'A') ) ); // 0
@@ -142,6 +149,7 @@ public:
 
 class EllRev0 : public PieceBase {
 public:
+  int Id() { return 4; }
   EllRev0() {
     blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); //   0
     blocks.push_back(make_shared<Block>(Block(1, 1, 'B') ) ); //   0
@@ -152,6 +160,7 @@ public:
 
 class EllRev1 : public PieceBase {
 public:
+  int Id() { return 5; }
   EllRev1() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); //     0
@@ -162,6 +171,7 @@ public:
 
 class EllRev2 : public PieceBase {
 public:
+  int Id() { return 6; }
   EllRev2() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0
     blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0
@@ -172,6 +182,7 @@ public:
 
 class EllRev3 : public PieceBase {
 public:
+  int Id() { return 7; }
   EllRev3() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0 0
@@ -182,6 +193,7 @@ public:
 
 class Tee0 : public PieceBase {
 public:
+  int Id() { return 8; }
   Tee0() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'C') ) ); // 0 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); //   0  
@@ -192,6 +204,7 @@ public:
 
 class Tee1 : public PieceBase {
 public:
+  int Id() { return 9; }
   Tee1() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'C') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); // 0 0
@@ -202,6 +215,7 @@ public:
 
 class Tee2 : public PieceBase {
 public:
+  int Id() { return 10; }
   Tee2() {
     blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); //   0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); // 0 0 0
@@ -212,6 +226,7 @@ public:
 
 class Tee3 : public PieceBase {
 public:
+  int Id() { return 11; }
   Tee3() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'C') ) ); //   0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'C') ) ); // 0 0
@@ -222,6 +237,7 @@ public:
 
 class Zee0 : public PieceBase {
 public:
+  int Id() { return 12; }
   Zee0() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'D') ) ); // 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'D') ) ); //   0 0
@@ -232,6 +248,7 @@ public:
 
 class Zee1 : public PieceBase {
 public:
+  int Id() { return 13; }
   Zee1() {
     blocks.push_back(make_shared<Block>(Block(0, 1, 'D') ) ); //   0
     blocks.push_back(make_shared<Block>(Block(1, 1, 'D') ) ); // 0 0
@@ -242,6 +259,7 @@ public:
 
 class ZeeRev0 : public PieceBase {
 public:
+  int Id() { return 14; }
   ZeeRev0() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'E') ) ); //   0 0
     blocks.push_back(make_shared<Block>(Block(1, 1, 'E') ) ); // 0 0
@@ -252,6 +270,7 @@ public:
 
 class ZeeRev1 : public PieceBase {
 public:
+  int Id() { return 15; }
   ZeeRev1() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'E') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'E') ) ); // 0 0
@@ -262,6 +281,7 @@ public:
 
 class Dash0 : public PieceBase {
 public:
+  int Id() { return 17; }
   Dash0() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'F') ) ); // 0 0 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'F') ) ); // 
@@ -272,6 +292,7 @@ public:
 
 class Dash1 : public PieceBase {
 public:
+  int Id() { return 16; }
   Dash1() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'F') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'F') ) ); // 0
@@ -282,6 +303,7 @@ public:
 
 class Box : public PieceBase {
 public:
+  int Id() { return 18; }
   Box() {
     blocks.push_back(make_shared<Block>(Block(0, 0, 'G') ) ); // 0 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'G') ) ); // 0 0
