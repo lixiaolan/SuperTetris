@@ -1,3 +1,23 @@
+#include <string>
+#include <sstream>
+#include <stack>
+#include <vector>
+#include <memory>
+#include "BlocksAndPieces.hpp"
+#include "Utility.hpp"
+#include "TetrisFiller.hpp"
+#include "pugixml/pugixml.hpp"
+
+using namespace std;
+using namespace pugi;
+
+string IntToString(int input)
+{
+  stringstream ss;
+  ss << input;
+  return ss.str();
+}
+
 vector<vector<shared_ptr<BlockBase > > > buildGrid(int rows, int cols, string gridString)
 {
   stringstream ss(gridString);
@@ -7,17 +27,17 @@ vector<vector<shared_ptr<BlockBase > > > buildGrid(int rows, int cols, string gr
   string cell;
   while (ss >> cell) {
     if (cell == "0") {
-      gridRow.push(make_shared<BlockBase>(BlankBlock(count / cols, count % cols));
+      gridRow.push_back(make_shared<BlankBlock>(BlankBlock(count / cols, count % cols)));
     }
-    else if (cell = "1") {
-      gridRow.push(make_shared<BlockBase>(Block(count / cols, count % cols, '1'));
+    else if (cell == "1") {
+      gridRow.push_back(make_shared<Block>(Block(count / cols, count % cols, '1')));
     }
     else {
       // TODO: handle the error here
     }
     count++;
     if (count % cols == 0) {
-      grid.push(gridRow);
+      grid.push_back(gridRow);
       gridRow.clear();
     }
   }
@@ -37,15 +57,9 @@ int GetAttributeAsInt(xml_node &node, string attribute)
   return result;
 }
 
-// Function to take a tetris fill puzzle and create a solution
-string TetrisFill(string input)
-{
-  // De-searilize string into xml object
-  xml_document doc;
-  doc.read(input);
-  xml_node problem = doc.child("tetrisFill").child("problem");
-  
+void TetrisFill(xml_document &doc) {
   // Read the problem and build the grid and extract start point
+  xml_node problem = doc.child("tetrisFill").child("problem");
   xml_node gridNode = problem.child("grid");
   int gridRows = GetAttributeAsInt(gridNode, "row");
   int gridCols = GetAttributeAsInt(gridNode, "col");
@@ -57,21 +71,50 @@ string TetrisFill(string input)
   vector<vector<shared_ptr<BlockBase > > > grid = buildGrid(gridRows, gridCols, gridString);
   // Pass the grid and start point to the tetris solver alg
 
-  TetrisFiller filler = TetrisFille(&grid);
+  TetrisFiller filler = TetrisFiller(&grid);
   filler.fill(startRow, startCol);
 
   // Get the solution stack and write to xml object
+  xml_node solution = doc.child("tetrisFill").append_child("solution");
   stack<shared_ptr<PieceBase> > solutionStack = filler.getSolutionStack();
-  
+  shared_ptr<PieceBase> piece;
+  while (!solutionStack.empty()) {
+    piece = solutionStack.top();
+    xml_node pieceNode = solution.append_child("piece");
+    pieceNode.append_attribute("type") = IntToString(piece->Id()).c_str();
+    pieceNode.append_attribute("row") = IntToString(piece->i).c_str();
+    pieceNode.append_attribute("col") = IntToString(piece->j).c_str();
+    solutionStack.pop();
+  }
+}  
 
+// Function to take a tetris fill puzzle and create a solution
+string TetrisFillString(string input)
+{
+  // De-searilize string into xml object
+  xml_document doc;
+  doc.load(input.c_str());
+  
+  TetrisFill(doc);
   
   // Searialize xml object back into string and return
+  stringstream ss;
+  doc.save(ss);
+  return ss.str();
+}
+
+void TetrisFillFile(string filePath)
+{
+  xml_document doc;
+  doc.load_file(filePath.c_str());
+  TetrisFill(doc);
+  doc.save_file(filePath.c_str());
 }
 
 int main() {
   // Build 
-
-  Game g;
-  g.run();
+  string file = "testFile.xml";
+  TetrisFillFile(file);  
+  
   return 0;
 }

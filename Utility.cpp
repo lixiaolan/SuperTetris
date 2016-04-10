@@ -1,5 +1,9 @@
 #include "Utility.hpp"
 
+// TODO REMOVE THIS:
+#include <fstream>
+
+
 // rotate by i*pi/2 radiants ccw
 void rotatePiece(shared_ptr<PieceBase> piece, unsigned i) {
   i %= 4;
@@ -34,137 +38,9 @@ void rotatePiece(shared_ptr<PieceBase> piece, unsigned i) {
   return;
 }
 
-// Translate piece by offset vector
-void translatePiece(shared_ptr<PieceBase> piece, int iOffset, int jOffset) {
-  for (auto bl : piece->getBlocks()) {
-    bl->i += iOffset;
-    bl->j += jOffset;
-  }
-  return;
-}
-
-// Function to enumerate all ppossible pieces anchored at 0,0. The
-// index should be less than 76.
-shared_ptr<PieceBase> getAnchoredPiece(unsigned index)
+shared_ptr<PieceBase> getEnumeratedPiece(unsigned index)
 {
-
-  // 0
-  // 0
-  // 0 0
-  if (index < 16) {
-    shared_ptr<PieceBase> ptr = make_shared<Ell0>(Ell0());
-    
-    if (index >= 4) {
-      translatePiece(ptr, -1, 0);
-    }
-    if (index >= 8) {
-      translatePiece(ptr, -1, 0);
-    }
-    if (index >= 12) {
-      translatePiece(ptr, 0, -1);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }
-
-  // 0 0 0
-  //     0  
-  if (index < 32) {
-    index = index % 16;
-    shared_ptr<PieceBase> ptr = make_shared<EllRev1>(EllRev1());
-    
-    if (index >= 4) {
-      translatePiece(ptr, 0, -1);
-    }
-    if (index >= 8) {
-      translatePiece(ptr, 0, -1);
-    }
-    if (index >= 12) {
-      translatePiece(ptr, -1, 0);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }
-
-  // 0 0 0
-  //   0
-  if (index < 48) {
-    index = index % 16;
-    shared_ptr<PieceBase> ptr = make_shared<Tee0>(Tee0());
-    
-    if (index >= 4) {
-      translatePiece(ptr, 0, -1);
-    }
-    if (index >= 8) {
-      translatePiece(ptr, -1, 0);
-    }
-    if (index >= 12) {
-      translatePiece(ptr, 1, -1);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }  
-
-  // 0 0  
-  //   0 0
-  if (index < 56) {
-    index = index % 8;
-    shared_ptr<PieceBase> ptr = make_shared<Zee0>(Zee0());
-    
-    if (index >= 4) {
-      translatePiece(ptr, 0, -1);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }  
-
-  // 0  
-  // 0 0
-  //   0
-  if (index < 64) {
-    index = index % 8;
-    shared_ptr<PieceBase> ptr = make_shared<ZeeRev1>(ZeeRev1());
-    
-    if (index >= 4) {
-      translatePiece(ptr, -1, 0);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }
-
-  // 0 0 0 0
-  if (index < 72) {
-    index = index % 8;
-    shared_ptr<PieceBase> ptr = make_shared<Dash0>(Dash0());
-    
-    if (index >= 4) {
-      translatePiece(ptr, 0, -1);
-    }
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }
-
-  // 0 0
-  // 0 0
-  if (index < 76) {
-    index = index % 4;
-    shared_ptr<PieceBase> ptr = make_shared<Box>(Box());    
-    
-    rotatePiece(ptr, index % 4);
-    return ptr;
-  }
-
-  return nullptr;
-}
-
-shared_ptr<PieceBase> RandomPieceFactory::getPiece() {
-  int index = rand() % 19;
+  index = index % 76;
   switch (index) {
   case(0):
     return make_shared<Ell0>(Ell0());
@@ -205,6 +81,27 @@ shared_ptr<PieceBase> RandomPieceFactory::getPiece() {
   case(18):
     return make_shared<Box>(Box());
   }
+  return nullptr;
+}
+
+// Function to enumerate all ppossible pieces anchored at 0,0. The
+// index should be less than 76.
+shared_ptr<PieceBase> getAnchoredPiece(unsigned index)
+{
+  index = index % 76;
+  shared_ptr<PieceBase> piece = getEnumeratedPiece(index / 4);
+  shared_ptr<BlockBase> block = (piece->getBlocks())[index % 4];
+  piece->translate(-block->i, -block->j);
+
+  ofstream ofs;
+  ofs.open("utility.txt", std::ios_base::app);
+  ofs << piece->Id() << endl;
+  return piece;
+}
+
+shared_ptr<PieceBase> RandomPieceFactory::getPiece() {
+  int index = rand() % 19;
+  return getEnumeratedPiece(index);
 };
 
 shared_ptr<PieceBase> RandomPieceFactory2::getPiece() {

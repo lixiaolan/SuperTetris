@@ -22,9 +22,10 @@ private:
   RandomPieceFactory RPF;
   vector<shared_ptr<PieceBase> > pieces;
   void drawPieces() {
-      pieces.front()->draw(loc);
+    pieces.front()->draw(loc);
       pair<int, int> queuePos(1, 15);
       for (int i = 1; i < pieces.size(); i++) {
+
 	pieces[i]->draw(queuePos);
 	queuePos.first += 5;
       }

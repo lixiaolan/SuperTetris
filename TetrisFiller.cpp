@@ -7,7 +7,7 @@ bool TetrisFiller::fill(int i, int j) {
   // Seed the random number generator
   srand(time(0));
   
-  if ((i > 0) && (i < (*grid).size()) && (j > 0) && (j < (*grid)[0].size())) {
+  if ((i >= 0) && (i < (*grid).size()) && (j >= 0) && (j < (*grid)[0].size())) {
     return selectFittingPiece(i, j);
   }
   else {
@@ -33,7 +33,7 @@ bool TetrisFiller::selectFittingPiece(int i, int j)
   for (unsigned index = 0; index < 76; index++) {
     
     shared_ptr<PieceBase> piece = getAnchoredPiece(randomArray[index]);
-    translatePiece(piece, i, j);
+    piece->translate(i, j);
 
     // Check if piece actually fits
     if (pieceFits(piece)) {
@@ -41,8 +41,8 @@ bool TetrisFiller::selectFittingPiece(int i, int j)
       // Make the new piece
       addPiece(piece);
 
-      // print for debugging
-      // printGrid();
+      //print for debugging
+      printGrid();
 
       // Try to surround piece
       if (surroundPiece(piece)) {
@@ -67,7 +67,6 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   // Keep iterating until all surrounding squares are filled
   while(1) {
     if (getEmptyPieceSurrounding(piece, i, j)) {
-      // cout << "got empty piece surrounding block at (" << i << " ," << j << ")";
 
       blocks.clear();
       int count = recCount(i, j);
@@ -77,6 +76,7 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
 
       // ofs << "count: " << count << endl;
       // ofs.close();
+
       
       if (count % 4 != 0) return false;
       
@@ -96,10 +96,10 @@ int TetrisFiller::recCount(int i, int j) {
   if (blocks.find((*grid)[i][j]) != blocks.end()) return 0;
   blocks.insert((*grid)[i][j]);
   
-  int u;
-  int d;
-  int l;
-  int r;
+  int u = 0;
+  int d = 0;
+  int l = 0;
+  int r = 0;
   if (i-1 >= 0) {
     u = recCount(i-1, j);
   }
@@ -152,14 +152,14 @@ bool TetrisFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int 
   j = blockPtr->j;
 
   i--;
-  if (i > 0) {
+  if (i >= 0) {
     if ((*grid)[i][j]->isBlank())
       return true;
   }
   
   i++;
   j--;
-  if (j > 0) {
+  if (j >= 0) {
     if ((*grid)[i][j]->isBlank())
       return true;
   }

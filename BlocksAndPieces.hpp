@@ -20,7 +20,7 @@ public:
   bool mark = false;
   int i;
   int j;
-  BlockBase() = default;
+  // BlockBase() = default;
   BlockBase(int a, int b) : i(a), j(b) {};
   virtual char draw() = 0;
   virtual bool isEdge() {return false;};
@@ -75,9 +75,9 @@ protected:
   // positions of upper left corner
 public:
   PieceBase() = default;
-  int i;
-  int j;
-  int Id() { return -1 };
+  int i = 0;
+  int j = 0;
+  virtual int Id() { return -1; };
   bool fitsIn(vector<vector< bool> > matrix) {
     // Expects array where true is open and false is filled    
     for (auto pb : blocks) {
@@ -85,6 +85,14 @@ public:
     }
     return true;
   };
+  void translate(int iOffset, int jOffset) {
+    for (auto bl : blocks) {
+      bl->i += iOffset;
+      bl->j += jOffset;
+    }
+    i += iOffset;
+    j += jOffset;
+  }
   vector<shared_ptr<Block> > getBlocks() {return blocks; };
   void draw(pair<int, int> loc) {
     for (int i = 0; i < 4; i++) {
@@ -174,9 +182,9 @@ public:
   int Id() { return 6; }
   EllRev2() {
     blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0
-    blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) ); // 0
-    blocks.push_back(make_shared<Block>(Block(0, 2, 'B') ) );
+    blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(2, 0, 'B') ) ); // 0
+    blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) );
   }
 };
 
