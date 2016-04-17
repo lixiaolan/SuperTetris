@@ -107,7 +107,7 @@ shared_ptr<PieceBase> RandomPieceFactory::getPiece() {
 shared_ptr<PieceBase> RandomPieceFactory2::getPiece() {
   int index1 = rand();
   int index2 = rand();
-  switch (index1 % 19) {
+  switch (index1 % 7) {
   case(0):
     switch(index2 % 4) {
     case(0):

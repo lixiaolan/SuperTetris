@@ -2,7 +2,7 @@
 
 TetrisFiller::TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid) {this->grid = grid; };
 
-bool TetrisFiller::fill(int i, int j) {
+bool TetrisFiller::fill(unsigned int i, unsigned int j) {
 
   // Seed the random number generator
   srand(time(0));
@@ -19,7 +19,7 @@ stack<shared_ptr<PieceBase> > TetrisFiller::getSolutionStack() {
   return pieces;
 }
 
-bool TetrisFiller::selectFittingPiece(int i, int j)
+bool TetrisFiller::selectFittingPiece(unsigned int i, unsigned int j)
 {
   if (!((*grid)[i][j]->isBlank() )) { return false; }
 
@@ -91,7 +91,7 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   return true;
 }
 
-int TetrisFiller::recCount(int i, int j) {
+int TetrisFiller::recCount(unsigned int i, unsigned int j) {
   if (!((*grid)[i][j]->isBlank() )) return 0;
   if (blocks.find((*grid)[i][j]) != blocks.end()) return 0;
   blocks.insert((*grid)[i][j]);
@@ -100,13 +100,13 @@ int TetrisFiller::recCount(int i, int j) {
   int d = 0;
   int l = 0;
   int r = 0;
-  if (i-1 >= 0) {
+  if (i >= 1) {
     u = recCount(i-1, j);
   }
   if (i+1 < (*grid).size()) {
     d = recCount(i+1, j);
   }
-  if (j-1 >= 0) {
+  if (j >= 1) {
     l = recCount(i, j-1);
   }
   if (j+1 < (*grid)[0].size()) {
@@ -166,14 +166,14 @@ bool TetrisFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int 
 
   i++;
   j++;
-  if (i < (*grid).size()) {
+  if (i < (int)(*grid).size()) {
     if ((*grid)[i][j]->isBlank())
       return true;
   }
 
   i--;
   j++;
-  if (j < (*grid)[0].size()) {
+  if (j < (int)(*grid)[0].size()) {
     if ((*grid)[i][j]->isBlank())
       return true;
   }
@@ -186,8 +186,8 @@ bool TetrisFiller::pieceFits(shared_ptr<PieceBase> piece) {
     // Verify that each block is inside the grid
     if (block->i < 0) return false;
     if (block->j < 0) return false;
-    if (block->i >= (*grid).size()) return false;
-    if (block->j >= (*grid)[0].size()) return false;
+    if (block->i >= (int)(*grid).size()) return false;
+    if (block->j >= (int)(*grid)[0].size()) return false;
 
     // Verify that each block is blank
     if (!((*grid)[block->i][block->j]->isBlank())) return false;
@@ -198,8 +198,8 @@ bool TetrisFiller::pieceFits(shared_ptr<PieceBase> piece) {
 void TetrisFiller::printGrid() {
   ofstream ofs;
   ofs.open("temp.txt", std::ios_base::app);
-  for (int i = 0; i < (*grid).size(); i++) {
-    for (int j = 0; j < (*grid)[0].size(); j++) {
+  for (unsigned int i = 0; i < (*grid).size(); i++) {
+    for (unsigned int j = 0; j < (*grid)[0].size(); j++) {
       ofs << (*grid)[i][j]->draw() << " ";
     }
     ofs << endl;
