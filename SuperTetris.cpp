@@ -24,7 +24,7 @@ private:
   void drawPieces() {
     pieces.front()->draw(loc);
       pair<int, int> queuePos(1, 15);
-      for (int i = 1; i < pieces.size(); i++) {
+      for (unsigned int i = 1; i < pieces.size(); i++) {
 
 	pieces[i]->draw(queuePos);
 	queuePos.first += 5;

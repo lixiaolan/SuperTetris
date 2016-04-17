@@ -21,21 +21,21 @@ using namespace std;
 class Board {
 public:
   Board() = default;
-  Board(int h, int w);
-  bool dropPiece(shared_ptr<PieceBase> piece, pair<int, int> loc);
+  Board(unsigned int h, unsigned int w);
+  bool dropPiece(shared_ptr<PieceBase> piece, pair<unsigned int, unsigned int> loc);
   void draw();
-  bool pieceFits(shared_ptr<PieceBase> piece, pair<int, int> loc);
+  bool pieceFits(shared_ptr<PieceBase> piece, pair<unsigned int, unsigned int> loc);
   ~Board() = default;
   unsigned linesKilled = 0;
   
 private:
-  int height, width;
+  unsigned int height, width;
   vector<vector <shared_ptr<BlockBase> > > grid;
 
   void fillEmpty();
-  int recCount(int, int);
-  void recFill(int, int);
-  void recResetMark(int, int);
+  int recCount(unsigned int, unsigned int);
+  // void recFill(int, int);
+  // void recResetMark(int, int);
   void killLines();
 };
 
