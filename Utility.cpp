@@ -92,10 +92,10 @@ shared_ptr<PieceBase> getAnchoredPiece(unsigned index)
   shared_ptr<PieceBase> piece = getEnumeratedPiece(index / 4);
   shared_ptr<BlockBase> block = (piece->getBlocks())[index % 4];
   piece->translate(-block->i, -block->j);
-
-  ofstream ofs;
-  ofs.open("utility.txt", std::ios_base::app);
-  ofs << piece->Id() << endl;
+  
+  // ofstream ofs;
+  // ofs.open("utility.txt", std::ios_base::app);
+  // ofs << piece->Id() << endl;
   return piece;
 }
 
