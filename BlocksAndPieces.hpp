@@ -181,7 +181,7 @@ class EllRev2 : public PieceBase {
 public:
   int Id() { return 6; }
   EllRev2() {
-    blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0 0
+    blocks.push_back(make_shared<Block>(Block(0, 0, 'B') ) ); // 0 0
     blocks.push_back(make_shared<Block>(Block(1, 0, 'B') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(2, 0, 'B') ) ); // 0
     blocks.push_back(make_shared<Block>(Block(0, 1, 'B') ) );
