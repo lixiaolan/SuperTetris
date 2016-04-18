@@ -36,10 +36,10 @@ private:
   void removeUpToAndIncluding(shared_ptr<PieceBase> piece);  
   // Method searches for unmarked squares surrounding a piece. The
   // method assumes that the piece itself has already been marked. 
-  bool getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i, int &j);
+  shared_ptr<BlockBase> getEmptyPieceSurrounding(shared_ptr<PieceBase> piece);
   // Finds an blank unmarked bock surrounding the input block. Assumes
   // the block is located inside of the grid.
-  bool getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j);
+  shared_ptr<BlockBase> getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr);
   bool pieceFits(shared_ptr<PieceBase> piece);
   void printGrid();
 };
