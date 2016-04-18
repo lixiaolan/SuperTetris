@@ -128,7 +128,7 @@ void Board::fillEmpty() {
 
 	  int c = recCount(i,j);
           if ((c % 4) == 0) {
-            TetrisFiller tetrisFiller = TetrisFiller(&grid);
+            TetrominoFiller tetrisFiller = TetrominoFiller(&grid);
             bool testBool = tetrisFiller.fill(i, j);
             if (!testBool) {
               recCount(i,j);

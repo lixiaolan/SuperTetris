@@ -1,8 +1,8 @@
-#include "TetrisFiller.hpp"
+#include "TetrominoFiller.hpp"
 
-TetrisFiller::TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid) {this->grid = grid; };
+TetrominoFiller::TetrominoFiller(vector<vector<shared_ptr<BlockBase > > > * grid) {this->grid = grid; };
 
-bool TetrisFiller::fill(unsigned int i, unsigned int j) {
+bool TetrominoFiller::fill(unsigned int i, unsigned int j) {
 
   // Seed the random number generator
   srand(time(0));
@@ -15,11 +15,11 @@ bool TetrisFiller::fill(unsigned int i, unsigned int j) {
   }
 }
 
-stack<shared_ptr<PieceBase> > TetrisFiller::getSolutionStack() {
+stack<shared_ptr<PieceBase> > TetrominoFiller::getSolutionStack() {
   return pieces;
 }
 
-bool TetrisFiller::selectFittingPiece(unsigned int i, unsigned int j)
+bool TetrominoFiller::selectFittingPiece(unsigned int i, unsigned int j)
 {
   if (!((*grid)[i][j]->isBlank() )) { return false; }
 
@@ -60,7 +60,7 @@ bool TetrisFiller::selectFittingPiece(unsigned int i, unsigned int j)
   return false;
 }
 
-bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
+bool TetrominoFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   int i;
   int j;
   
@@ -91,7 +91,7 @@ bool TetrisFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   return true;
 }
 
-int TetrisFiller::recCount(unsigned int i, unsigned int j) {
+int TetrominoFiller::recCount(unsigned int i, unsigned int j) {
   if (!((*grid)[i][j]->isBlank() )) return 0;
   if (blocks.find((*grid)[i][j]) != blocks.end()) return 0;
   blocks.insert((*grid)[i][j]);
@@ -116,7 +116,7 @@ int TetrisFiller::recCount(unsigned int i, unsigned int j) {
   return 1+u+d+l+r;
 }
 
-void TetrisFiller::addPiece(shared_ptr<PieceBase> piece) {
+void TetrominoFiller::addPiece(shared_ptr<PieceBase> piece) {
   // Add to stack
   pieces.push(piece);
   // Add to grid
@@ -125,7 +125,7 @@ void TetrisFiller::addPiece(shared_ptr<PieceBase> piece) {
   }
 }
 
-void TetrisFiller::removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
+void TetrominoFiller::removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
   while(pieces.size() > 0) {
     shared_ptr<PieceBase> top = pieces.top();
     pieces.pop();
@@ -138,7 +138,7 @@ void TetrisFiller::removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
 
 // Method searches for blank squares surrounding a piece. The method
 // assumes that the piece itself has already been marked.
-bool TetrisFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i, int &j) {
+bool TetrominoFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i, int &j) {
   for (auto blockPtr : piece->getBlocks()) {
     if (getEmptyBlockSurrounding(blockPtr, i, j)) return true;
   }
@@ -147,7 +147,7 @@ bool TetrisFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece, int &i,
 
 // Finds a blank bock surrounding the input block. Assumes the block
 // is located inside of the grid.
-bool TetrisFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j) {
+bool TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int &i, int &j) {
   i = blockPtr->i;
   j = blockPtr->j;
 
@@ -181,7 +181,7 @@ bool TetrisFiller::getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr, int 
   return false;
 }
 
-bool TetrisFiller::pieceFits(shared_ptr<PieceBase> piece) {
+bool TetrominoFiller::pieceFits(shared_ptr<PieceBase> piece) {
   for (auto block : piece->getBlocks()) {
     // Verify that each block is inside the grid
     if (block->i < 0) return false;
@@ -195,7 +195,7 @@ bool TetrisFiller::pieceFits(shared_ptr<PieceBase> piece) {
   return true;
 }
 
-void TetrisFiller::printGrid() {
+void TetrominoFiller::printGrid() {
   ofstream ofs;
   ofs.open("temp.txt", std::ios_base::app);
   for (unsigned int i = 0; i < (*grid).size(); i++) {

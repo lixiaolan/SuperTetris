@@ -5,7 +5,7 @@
 #include <memory>
 #include "BlocksAndPieces.hpp"
 #include "Utility.hpp"
-#include "TetrisFiller.hpp"
+#include "TetrominoFiller.hpp"
 #include "pugixml/pugixml.hpp"
 
 using namespace std;
@@ -57,7 +57,7 @@ int GetAttributeAsInt(xml_node &node, string attribute)
   return result;
 }
 
-void TetrisFill(xml_document &doc) {
+void TetrominoFill(xml_document &doc) {
   // Read the problem and build the grid and extract start point
   xml_node problem = doc.child("tetrisFill").child("problem");
   xml_node gridNode = problem.child("grid");
@@ -71,7 +71,7 @@ void TetrisFill(xml_document &doc) {
   vector<vector<shared_ptr<BlockBase > > > grid = buildGrid(gridRows, gridCols, gridString);
   // Pass the grid and start point to the tetris solver alg
 
-  TetrisFiller filler = TetrisFiller(&grid);
+  TetrominoFiller filler = TetrominoFiller(&grid);
   filler.fill(startRow, startCol);
 
   // Get the solution stack and write to xml object
@@ -89,13 +89,13 @@ void TetrisFill(xml_document &doc) {
 }  
 
 // Function to take a tetris fill puzzle and create a solution
-string TetrisFillString(string input)
+string TetrominoFillString(string input)
 {
   // De-searilize string into xml object
   xml_document doc;
   doc.load(input.c_str());
   
-  TetrisFill(doc);
+  TetrominoFill(doc);
   
   // Searialize xml object back into string and return
   stringstream ss;
@@ -103,18 +103,18 @@ string TetrisFillString(string input)
   return ss.str();
 }
 
-void TetrisFillFile(string filePath)
+void TetrominoFillFile(string filePath)
 {
   xml_document doc;
   doc.load_file(filePath.c_str());
-  TetrisFill(doc);
+  TetrominoFill(doc);
   doc.save_file(filePath.c_str());
 }
 
 int main() {
   // Build 
   string file = "testFile.xml";
-  TetrisFillFile(file);  
+  TetrominoFillFile(file);  
   
   return 0;
 }

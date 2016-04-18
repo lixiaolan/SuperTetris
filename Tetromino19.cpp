@@ -12,7 +12,7 @@
 #include <algorithm>
 #include "BlocksAndPieces.hpp"
 #include "Utility.hpp"
-#include "TetrisFiller.hpp"
+#include "TetrominoFiller.hpp"
 #include "Board.hpp"
 
 class Game {

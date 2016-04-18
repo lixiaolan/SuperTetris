@@ -20,9 +20,9 @@
 
 using namespace std;
 
-class TetrisFiller {
+class TetrominoFiller {
 public:
-  TetrisFiller(vector<vector<shared_ptr<BlockBase > > > * grid);
+  TetrominoFiller(vector<vector<shared_ptr<BlockBase > > > * grid);
   bool fill(unsigned int i, unsigned int j);
   stack<shared_ptr<PieceBase> > getSolutionStack();
 private:
