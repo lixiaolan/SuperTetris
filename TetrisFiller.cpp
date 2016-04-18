@@ -42,7 +42,7 @@ bool TetrisFiller::selectFittingPiece(unsigned int i, unsigned int j)
       addPiece(piece);
 
       //print for debugging
-      printGrid();
+      // printGrid();
 
       // Try to surround piece
       if (surroundPiece(piece)) {
