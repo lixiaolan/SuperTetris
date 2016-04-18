@@ -6,7 +6,7 @@ CFLAGS = -g -Wall
 PUGI = pugixml/
 
 #Define the rules in the dependancy tree:
-progs : superTetromino tetrisFill
+progs : tetromino19 tetrominoFill
 
 Utility.o : Utility.cpp Utility.hpp BlocksAndPieces.hpp
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -17,17 +17,17 @@ TetrominoFiller.o : TetrominoFiller.cpp TetrominoFiller.hpp Utility.o
 Board.o : Board.cpp Board.hpp TetrominoFiller.o
 	$(CC) -c -o $@ Board.cpp $(CFLAGS)
 
-Tetromino19 : Tetromino19.cpp Board.o Utility.o
-	$(CC) -o $@ SuperTetromino.cpp Board.o Utility.o TetrominoFiller.o -lncurses $(CFLAGS)
+tetromino19 : Tetromino19.cpp Board.o Utility.o
+	$(CC) -o $@ Tetromino19.cpp Board.o Utility.o TetrominoFiller.o -lncurses $(CFLAGS)
 
 pugixml.o : $(PUGI)pugixml.cpp $(PUGI)pugixml.hpp $(PUGI)pugiconfig.hpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-TetrominoFill : TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o
+tetrominoFill : TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o
 	$(CC) -o $@ TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o $(CFLAGS)
 
 .PHONY: clean
 
 clean:
-	rm *.o Tetromino19 TetrominoFill
+	rm *.o tetromino19 tetrominoFill
 
