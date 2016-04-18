@@ -18,9 +18,8 @@ using namespace std;
 class BlockBase {
 public:
   bool mark = false;
-  int i;
-  int j;
-  // BlockBase() = default;
+  int i = 0;
+  int j = 0;
   BlockBase(int a, int b) : i(a), j(b) {};
   virtual char draw() = 0;
   virtual bool isEdge() {return false;};
