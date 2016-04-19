@@ -65,21 +65,23 @@ bool TetrominoFiller::surroundPiece(shared_ptr<PieceBase> piece) {
   // Keep iterating until all surrounding squares are filled
   while(1) {
     shared_ptr<BlockBase> blockPtr = getEmptyPieceSurrounding(piece);
-    if (blockPtr != nullptr) {
+    if (blockPtr->isBlank()) {
 
       blocks.clear();
       
-      int count = recCount(blockPtr->j, blockPtr->i);
+      int count = recCount(blockPtr->i, blockPtr->j);
 
       // ofstream ofs;
       // ofs.open("temp.txt", std::ios_base::app);
 
+      // ofs << "i: " << blockPtr->i << endl;
+      // ofs << "j: " << blockPtr->j << endl;
       // ofs << "count: " << count << endl;
       // ofs.close();
       
       if (count % 4 != 0) return false;
       
-      if (!selectFittingPiece(blockPtr->j, blockPtr->i)) return false;
+      if (!selectFittingPiece(blockPtr->i, blockPtr->j)) return false;
     }
     else {
       break;
@@ -91,17 +93,6 @@ bool TetrominoFiller::surroundPiece(shared_ptr<PieceBase> piece) {
 }
 
 int TetrominoFiller::recCount(unsigned int i, unsigned int j) {
-
-  // ofstream ofs;
-  // ofs.open("temp.txt", std::ios_base::app);
-  // ofs << "i: " << i << endl;
-  // ofs << "j: " << j << endl;
-  // ofs << "sizex: " << (*grid).size() << endl;
-  // ofs << "sizey: " << (*grid)[0].size() << endl;
-
-  // ofs.close();
-
-  
   if (!((*grid)[i][j]->isBlank() )) return 0;
   if (blocks.find((*grid)[i][j]) != blocks.end()) return 0;
   blocks.insert((*grid)[i][j]);
@@ -151,9 +142,9 @@ void TetrominoFiller::removeUpToAndIncluding(shared_ptr<PieceBase> piece) {
 shared_ptr<BlockBase> TetrominoFiller::getEmptyPieceSurrounding(shared_ptr<PieceBase> piece) {
   for (auto blockPtr : piece->getBlocks()) {
     shared_ptr<BlockBase> emptryBlockPtr = getEmptyBlockSurrounding(blockPtr);
-    if (emptryBlockPtr != nullptr) return emptryBlockPtr;
+    if (emptryBlockPtr->isBlank()) return emptryBlockPtr;
   }
-  return nullptr;
+  return make_shared<Block>(Block(0, 0, 'X'));
 }
 
 // Finds a blank bock surrounding the input block. Assumes the block
@@ -165,7 +156,7 @@ shared_ptr<BlockBase> TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<Block
   i--;
   if (i >= 0) {
     if ((*grid)[i][j]->isBlank()) {
-      return (*grid)[i][j];
+      return make_shared<BlankBlock>(BlankBlock(i, j));
     }
   }
   
@@ -173,7 +164,7 @@ shared_ptr<BlockBase> TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<Block
   j--;
   if (j >= 0) {
     if ((*grid)[i][j]->isBlank()) {
-      return (*grid)[i][j];
+      return make_shared<BlankBlock>(BlankBlock(i, j));
     }
   }
 
@@ -181,7 +172,7 @@ shared_ptr<BlockBase> TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<Block
   j++;
   if (i < (int)(*grid).size()) {
     if ((*grid)[i][j]->isBlank()) {
-      return (*grid)[i][j];
+      return make_shared<BlankBlock>(BlankBlock(i, j));
     }
   }
 
@@ -189,11 +180,11 @@ shared_ptr<BlockBase> TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<Block
   j++;
   if (j < (int)(*grid)[0].size()) {
     if ((*grid)[i][j]->isBlank()) {
-      return (*grid)[i][j];
+      return make_shared<BlankBlock>(BlankBlock(i, j));
     }
   }
 
-  return nullptr;
+  return make_shared<Block>(Block(0, 0, 'X'));
 }
 
 // Finds a blank bock surrounding the input block. Assumes the block
