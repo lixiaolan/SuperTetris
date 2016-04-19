@@ -32,7 +32,7 @@ void Board::draw() {
   for (unsigned int i = 0; i < grid.size(); i++) {
     for (unsigned int j = 0; j < grid[0].size(); j++) {
       mvaddch(i, 2*j, grid[i][j]->draw() );
-      mvaddch(i, 2*j+1, ' ' );
+      mvaddch(i, 2*j+1, ' ');
     }
   }         
   refresh();

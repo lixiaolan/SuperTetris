@@ -40,6 +40,8 @@ private:
   // Finds an blank unmarked bock surrounding the input block. Assumes
   // the block is located inside of the grid.
   shared_ptr<BlockBase> getEmptyBlockSurrounding(shared_ptr<BlockBase> blockPtr);
+  vector<shared_ptr<BlockBase> > getEmptyBlockSurroundings(shared_ptr<BlockBase> blockPtr);
+  set<shared_ptr<BlockBase> > getEmptyPieceSurroundings(shared_ptr<PieceBase> piece);
   vector<shared_ptr<BlockBase> > getEmptyBlocksSurrounding(shared_ptr<BlockBase> blockPtr);
   bool pieceFits(shared_ptr<PieceBase> piece);
   void printGrid();
