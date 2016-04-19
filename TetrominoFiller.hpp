@@ -43,6 +43,10 @@ private:
   vector<shared_ptr<BlockBase> > getEmptyBlockSurroundings(shared_ptr<BlockBase> blockPtr);
   set<shared_ptr<BlockBase> > getEmptyPieceSurroundings(shared_ptr<PieceBase> piece);
   vector<shared_ptr<BlockBase> > getEmptyBlocksSurrounding(shared_ptr<BlockBase> blockPtr);
+  vector<shared_ptr<BlockBase> > getBlockSurroundings(shared_ptr<BlockBase> block);
+  pair<int, int> analyzeBlock(shared_ptr<BlockBase> block);
+  int scoreBlock(shared_ptr<BlockBase> block);
+  shared_ptr<BlockBase> getMaxScoredBlock(set<shared_ptr<BlockBase> > blocks);
   bool pieceFits(shared_ptr<PieceBase> piece);
   void printGrid();
 };

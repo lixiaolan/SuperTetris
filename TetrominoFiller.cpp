@@ -67,17 +67,50 @@ bool TetrominoFiller::surroundPiece(shared_ptr<PieceBase> piece) {
     blocks.clear();
     set<shared_ptr<BlockBase> > emptyBlocks = getEmptyPieceSurroundings(piece);
     shared_ptr<BlockBase> smallestAreaEmptyBlock;
-    int smallestCount = 100000000;
+
+    // int smallestCount = 100000000;
+    // for (shared_ptr<BlockBase> emptyBlock : emptyBlocks) {
+    //   int count = recCount(emptyBlock->i, emptyBlock->j);
+    //   if (count % 4 != 0) return false;
+    //   if (count != 0 && count < smallestCount) {
+    //     smallestCount = count;
+    //     smallestAreaEmptyBlock = emptyBlock;
+    //   }
+    // }
+
     for (shared_ptr<BlockBase> emptyBlock : emptyBlocks) {
       int count = recCount(emptyBlock->i, emptyBlock->j);
       if (count % 4 != 0) return false;
-      if (count != 0 && count < smallestCount) {
-        smallestCount = count;
-        smallestAreaEmptyBlock = emptyBlock;
+    }
+
+    shared_ptr<BlockBase> selectedEmptyBlock = getMaxScoredBlock(emptyBlocks);
+
+    // Print some of the selected block information
+    ofstream ofs;
+    ofs.open("temp.txt", std::ios_base::app);
+
+    ofs << "i: " << selectedEmptyBlock->i << endl;
+    ofs << "j: " << selectedEmptyBlock->j << endl;
+    pair<int, int> analysis = analyzeBlock(selectedEmptyBlock);
+    ofs << "analysis: " << analysis.first << ", " << analysis.first << endl;
+    ofs << "score: " << scoreBlock(selectedEmptyBlock) << endl;
+    vector<shared_ptr<BlockBase> > surroundings = getBlockSurroundings(selectedEmptyBlock);
+    ofs << "surroundings: ";
+    for (auto block : surroundings) {
+      if (block->isBlank()) {
+        ofs << "0 ";
+      }
+      else {
+        ofs << "1 ";
       }
     }
+    ofs << endl;
+      
+    
+    ofs.close();
+
     if (emptyBlocks.size() > 0) {
-      if (!selectFittingPiece(smallestAreaEmptyBlock->i, smallestAreaEmptyBlock->j)) return false;
+      if (!selectFittingPiece(selectedEmptyBlock->i, selectedEmptyBlock->j)) return false;
     }
     else {
       break;
@@ -192,6 +225,114 @@ shared_ptr<BlockBase> TetrominoFiller::getEmptyBlockSurrounding(shared_ptr<Block
   }
 
   return make_shared<Block>(Block(0, 0, 'X'));
+}
+
+int TetrominoFiller::scoreBlock(shared_ptr<BlockBase> block) {
+  pair<int, int> analysis = analyzeBlock(block);
+  return 9*analysis.first + analysis.second;
+}
+
+shared_ptr<BlockBase> TetrominoFiller::getMaxScoredBlock(set<shared_ptr<BlockBase> > blocks) {
+  int maxScore = -1;
+  shared_ptr<BlockBase> maxBlock = nullptr;
+  int temp = 0;
+  for (shared_ptr<BlockBase> block : blocks) {
+    temp = scoreBlock(block);
+    if (temp > maxScore) {
+      maxScore = temp;
+      maxBlock = block;
+    }
+  }
+  if (maxBlock == nullptr) {
+    return make_shared<Block>(Block(0,0,'X'));
+  }
+  else {
+    return maxBlock;
+  }
+}
+
+pair<int, int> TetrominoFiller::analyzeBlock(shared_ptr<BlockBase> block) {
+  ofstream ofs;
+  ofs.open("debug.txt", std::ios_base::app);
+  ofs << "start analyzeBlock" << endl;
+
+  int regions = 0;
+  int neighbors = 0;
+  bool inRegion = false;
+
+  shared_ptr<BlockBase> lastBlock;
+  shared_ptr<BlockBase> firstBlock = nullptr;
+
+  ofs << "in analyzeBlock" << endl;
+  for (shared_ptr<BlockBase> indexBlock : getBlockSurroundings(block)) {
+    if (firstBlock == nullptr) firstBlock = indexBlock;
+    lastBlock = indexBlock;
+    
+    if (indexBlock->isBlank()) {
+      if (!inRegion) {
+        regions++;
+      }
+      inRegion = true;
+    }
+    else {
+      neighbors++;
+      inRegion = false;
+    }
+  }
+
+  if (firstBlock->isBlank() && lastBlock->isBlank()) {
+    regions--;
+  }
+  
+  pair<int, int> ret;
+  ret.first = regions;
+  ret.second = neighbors;
+
+  ofs << "end analyzeBlock" << endl;
+  return ret; 
+}
+
+vector<shared_ptr<BlockBase> > TetrominoFiller::getBlockSurroundings(shared_ptr<BlockBase> block) {
+  ofstream ofs;
+  ofs.open("debug.txt", std::ios_base::app);
+  ofs << "start getBlockSurroundings" << endl;
+
+  vector<int> iOffset = {0, -1, -1, -1, 0, 1, 1 ,1};
+  vector<int> jOffset = {1, 1, 0, -1, -1, -1, 0 ,1};
+
+  vector<shared_ptr<BlockBase> > surroundings;
+
+  for (int index = 0; index < 8; index++) {
+  
+    int i = block->i;
+    int j = block->j;
+
+    i += iOffset[index];
+    j += jOffset[index];
+
+    // If we are out of bounds return a non-blank block
+    if (i < 0 || i >= (int)(*grid).size()) {
+      surroundings.push_back(make_shared<Block>(Block(0, 0, 'X')));
+      continue;
+    }
+    if (j < 0 || j >= (int)(*grid)[0].size()) {
+      surroundings.push_back(make_shared<Block>(Block(0, 0, 'X')));
+      continue;
+    }
+
+    ofs << "start loop getBlockSurroundings" << endl;
+    
+    // Otherwise, return a block based on the block in the grid
+    if ((*grid)[i][j]->isBlank()) {
+      surroundings.push_back(make_shared<BlankBlock>(BlankBlock(i, j)));
+    }
+    else {
+      surroundings.push_back(make_shared<Block>(Block(i, j, 'X')));
+    }
+  }
+
+  ofs << "end getBlockSurroundings" << endl;
+  return surroundings;
 }
 
 // is located inside of the grid.
