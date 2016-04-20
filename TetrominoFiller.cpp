@@ -64,57 +64,76 @@ bool TetrominoFiller::surroundPiece(shared_ptr<PieceBase> piece) {
 
   // Keep iterating until all surrounding squares are filled
   while(1) {
-    blocks.clear();
     set<shared_ptr<BlockBase> > emptyBlocks = getEmptyPieceSurroundings(piece);
-    shared_ptr<BlockBase> smallestAreaEmptyBlock;
+    if (emptyBlocks.size() == 0) break;
 
-    // int smallestCount = 100000000;
+    shared_ptr<BlockBase> selectedEmptyBlock = nullptr;
+
+    // TODO REMOVE THIS
+    vector<int> counts;
+
+    blocks.clear();
+    int smallestCount = 100000000;
+    int regions = 0;
+    for (shared_ptr<BlockBase> emptyBlock : emptyBlocks) {
+      int count = recCount(emptyBlock->i, emptyBlock->j);
+
+      // Remove this:
+      counts.push_back(count);
+      
+      if (count % 4 != 0) return false;
+      if (count > 0) regions++;
+      if (count > 0 && count < smallestCount) {
+        smallestCount = count;
+        selectedEmptyBlock = emptyBlock;
+      }
+    }
+    
     // for (shared_ptr<BlockBase> emptyBlock : emptyBlocks) {
     //   int count = recCount(emptyBlock->i, emptyBlock->j);
     //   if (count % 4 != 0) return false;
-    //   if (count != 0 && count < smallestCount) {
-    //     smallestCount = count;
-    //     smallestAreaEmptyBlock = emptyBlock;
-    //   }
     // }
-
-    for (shared_ptr<BlockBase> emptyBlock : emptyBlocks) {
-      int count = recCount(emptyBlock->i, emptyBlock->j);
-      if (count % 4 != 0) return false;
+    
+    if (regions < 2) {
+      selectedEmptyBlock = getMaxScoredBlock(emptyBlocks);
     }
-
-    shared_ptr<BlockBase> selectedEmptyBlock = getMaxScoredBlock(emptyBlocks);
 
     // Print some of the selected block information
-    ofstream ofs;
-    ofs.open("temp.txt", std::ios_base::app);
+    // ofstream ofs;
+    // ofs.open("temp.txt", std::ios_base::app);
+    // ofs << "i: " << selectedEmptyBlock->i << endl;
+    // ofs << "j: " << selectedEmptyBlock->j << endl;
+    // pair<int, int> analysis = analyzeBlock(selectedEmptyBlock);
+    // ofs << "analysis: " << analysis.first << ", " << analysis.first << endl;
+    // ofs << "score: " << scoreBlock(selectedEmptyBlock) << endl;
+    // vector<shared_ptr<BlockBase> > surroundings = getBlockSurroundings(selectedEmptyBlock);
+    // ofs << "surroundings: ";
+    // for (auto block : surroundings) {
+    //   if (block->isBlank()) {
+    //     ofs << "0 ";
+    //   }
+    //   else {
+    //     ofs << "1 ";
+    //   }
+    // }
+    // ofs << endl;
+    // ofs << "regions: " << regions << endl;
+    // ofs << "empty Blocks: ";
+    // for (auto block : emptyBlocks) {
+    //   ofs << "(" << block->i << ", " << block->j << ") ";
+    // }
+    // ofs << endl;
+    // ofs << "smallest count: " << smallestCount << endl;
+    // ofs << "counts: ";
+    // for (int i : counts) {
+    //   ofs << i << " ";
+    // }
+    // ofs << endl;
 
-    ofs << "i: " << selectedEmptyBlock->i << endl;
-    ofs << "j: " << selectedEmptyBlock->j << endl;
-    pair<int, int> analysis = analyzeBlock(selectedEmptyBlock);
-    ofs << "analysis: " << analysis.first << ", " << analysis.first << endl;
-    ofs << "score: " << scoreBlock(selectedEmptyBlock) << endl;
-    vector<shared_ptr<BlockBase> > surroundings = getBlockSurroundings(selectedEmptyBlock);
-    ofs << "surroundings: ";
-    for (auto block : surroundings) {
-      if (block->isBlank()) {
-        ofs << "0 ";
-      }
-      else {
-        ofs << "1 ";
-      }
-    }
-    ofs << endl;
-      
+    // ofs.close();
+
     
-    ofs.close();
-
-    if (emptyBlocks.size() > 0) {
-      if (!selectFittingPiece(selectedEmptyBlock->i, selectedEmptyBlock->j)) return false;
-    }
-    else {
-      break;
-    }
+    if (!selectFittingPiece(selectedEmptyBlock->i, selectedEmptyBlock->j)) return false;
   }
 
   // If we get here, all surrounding pieces have been filed
