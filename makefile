@@ -24,7 +24,7 @@ pugixml.o : $(PUGI)pugixml.cpp $(PUGI)pugixml.hpp $(PUGI)pugiconfig.hpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 tetrominoFill : TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o
-	$(CC) -o $@ TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o $(CFLAGS)
+	$(CC) -g -o $@ TetrominoFill.cpp Utility.o TetrominoFiller.o pugixml.o $(CFLAGS)
 
 .PHONY: clean
 

@@ -42,7 +42,7 @@ bool TetrominoFiller::selectFittingPiece(unsigned int i, unsigned int j)
       addPiece(piece);
 
       //print for debugging
-      printGrid();
+      // printGrid();
 
       // Try to surround piece
       if (surroundPiece(piece)) {
@@ -271,9 +271,9 @@ shared_ptr<BlockBase> TetrominoFiller::getMaxScoredBlock(set<shared_ptr<BlockBas
 }
 
 pair<int, int> TetrominoFiller::analyzeBlock(shared_ptr<BlockBase> block) {
-  ofstream ofs;
-  ofs.open("debug.txt", std::ios_base::app);
-  ofs << "start analyzeBlock" << endl;
+  // ofstream ofs;
+  // ofs.open("debug.txt", std::ios_base::app);
+  // ofs << "start analyzeBlock" << endl;
 
   int regions = 0;
   int neighbors = 0;
@@ -282,7 +282,7 @@ pair<int, int> TetrominoFiller::analyzeBlock(shared_ptr<BlockBase> block) {
   shared_ptr<BlockBase> lastBlock;
   shared_ptr<BlockBase> firstBlock = nullptr;
 
-  ofs << "in analyzeBlock" << endl;
+  // ofs << "in analyzeBlock" << endl;
   for (shared_ptr<BlockBase> indexBlock : getBlockSurroundings(block)) {
     if (firstBlock == nullptr) firstBlock = indexBlock;
     lastBlock = indexBlock;
@@ -307,14 +307,14 @@ pair<int, int> TetrominoFiller::analyzeBlock(shared_ptr<BlockBase> block) {
   ret.first = regions;
   ret.second = neighbors;
 
-  ofs << "end analyzeBlock" << endl;
+  // ofs << "end analyzeBlock" << endl;
   return ret; 
 }
 
 vector<shared_ptr<BlockBase> > TetrominoFiller::getBlockSurroundings(shared_ptr<BlockBase> block) {
-  ofstream ofs;
-  ofs.open("debug.txt", std::ios_base::app);
-  ofs << "start getBlockSurroundings" << endl;
+  // ofstream ofs;
+  // ofs.open("debug.txt", std::ios_base::app);
+  // ofs << "start getBlockSurroundings" << endl;
 
   vector<int> iOffset = {0, -1, -1, -1, 0, 1, 1 ,1};
   vector<int> jOffset = {1, 1, 0, -1, -1, -1, 0 ,1};
@@ -339,7 +339,7 @@ vector<shared_ptr<BlockBase> > TetrominoFiller::getBlockSurroundings(shared_ptr<
       continue;
     }
 
-    ofs << "start loop getBlockSurroundings" << endl;
+    // ofs << "start loop getBlockSurroundings" << endl;
     
     // Otherwise, return a block based on the block in the grid
     if ((*grid)[i][j]->isBlank()) {
@@ -350,7 +350,7 @@ vector<shared_ptr<BlockBase> > TetrominoFiller::getBlockSurroundings(shared_ptr<
     }
   }
 
-  ofs << "end getBlockSurroundings" << endl;
+  // ofs << "end getBlockSurroundings" << endl;
   return surroundings;
 }
 
